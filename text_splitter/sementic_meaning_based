@@ -1,0 +1,25 @@
+from langchain_experimental.text_splitter import SemanticChunker
+from langchain_google_genai import GoogleGenerativeAIEmbeddings
+from dotenv import load_dotenv
+
+load_dotenv()
+
+text_splitter = SemanticChunker(
+    embeddings=GoogleGenerativeAIEmbeddings('gemini-embedding-exp-03-07'),
+    breakpoint_threshold_type='standard_deviation',
+    breakpoint_threshold=1,
+)
+
+text = '''
+Climate change is reshaping our world in real-time — from flooded coastal cities to unprecedented heatwaves in Europe. At the same time, the Indian Premier League (IPL) continues to draw millions of viewers, offering a temporary escape from global anxieties. Tourism in hill stations has also surged post-COVID, with people yearning for open skies and fresh air, even as melting glaciers pose threats to the very places they flock to.
+
+Governments have attempted to balance economic revival through tourism and sports with the looming threat of environmental collapse. While cricket stadiums expand and travel agencies boom, little is done to mitigate the rising carbon footprints of these industries. Meanwhile, discussions about sustainability are often overshadowed by the glitz of international sports and the promise of economic gain from global travelers.
+
+In stark contrast to these lighter trends, global terrorism remains a persistent threat. The recent uptick in cyberterrorism and lone-wolf attacks has raised alarms across intelligence agencies. Some nations are struggling to protect critical infrastructure, while misinformation campaigns deepen public distrust. Ironically, the same digital platforms that promote tourism and livestream cricket are being exploited for radical propaganda.
+
+Amid this chaos, it’s easy to overlook the need for cohesive global governance. The convergence of climate urgency, entertainment-driven distraction, and rising extremism paints a complex picture of our times. Any solution must be holistic — blending security, sustainability, and human development — instead of isolated interventions.
+'''
+
+result = text_splitter.create_documents([text])
+
+print(len(result))
